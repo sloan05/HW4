@@ -13,7 +13,10 @@ public class Bird : MonoBehaviour
     
     void Start()
     {
-        
+        if (_rigibody == null)
+        {
+            _rigibody = GetComponant<Rigibody2D>();
+        }
     }
 
     
@@ -24,4 +27,23 @@ public class Bird : MonoBehaviour
             _rigibody.velocity = new Vector2 (_rigibody.velocity.x, _jumpVelocity);
         }
     }
+
+    private void OnTriggerEnter2D (Collider2D other)
+    {
+         if (other.CompareTag("Pipe"))
+        {
+            Debug.Log("DIES");
+            _Locator.ResetPoints();
+            Destory(other.GameObject);
+        }
+
+        if (other.CompareTag("InvisibleWall"))
+        {
+            Debug.Log("PointScored!");
+            _Locator.AddPoint();
+        }
+    
+    }
+   
+    
 }
