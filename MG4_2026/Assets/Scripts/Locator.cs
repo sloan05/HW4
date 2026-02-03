@@ -1,33 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Locator : MonoBehaviour
 {
-    [SerializeField] private Text _scoreText;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private Bird _player;
 
-    private int _score = 0;
+    
 
     private void Start()
     {
-       Locator.Instance.Player.PointsChanged += HandlePlayerEarnedPoint; 
-
-       UpdateScoreUI();
-    }
-
-
-    public void AddPoint()
-    {
-        _score++;
-        UpdateScoreU();
-    }
-    
-    private void UpdateScoreU()
-    {
-        if (_scoreText != null)
+        if (_player != null)
         {
-            _scoreText.text = _score;
+            _player.PointsChanged += HandlePointsChanged;
+        }
+        
+    }
+    private void HandlePointsChanged(int points)
+    {
+        if(_scoreText != null)
+        {
+            _scoreText.text = points.ToString();
         }
     }
+
 
 }
